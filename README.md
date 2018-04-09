@@ -35,18 +35,335 @@ The program will run on the default 8080 port.
 
 To get a list of all the hotels in Bangkok city:
 http://localhost:8080/city/bangkok
-
+```sh
+{
+	"statusCode": 200,
+	"message": "Success",
+	"results": [{
+		"city": "Bangkok",
+		"hotelID": 1,
+		"room": "Deluxe",
+		"price": 1000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 6,
+		"room": "Superior",
+		"price": 2000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 8,
+		"room": "Superior",
+		"price": 2400.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 11,
+		"room": "Deluxe",
+		"price": 60.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 14,
+		"room": "Sweet Suite",
+		"price": 25000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 15,
+		"room": "Deluxe",
+		"price": 900.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 18,
+		"room": "Sweet Suite",
+		"price": 5300.0
+	}]
+}
+```
 To get a list of all the hotels in Bangkok city sorted in the ascending order of prices:
 http://localhost:8080/city/bangkok?orderBy=asc
-
+```sh
+{
+	"statusCode": 200,
+	"message": "Success",
+	"results": [{
+		"city": "Bangkok",
+		"hotelID": 11,
+		"room": "Deluxe",
+		"price": 60.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 15,
+		"room": "Deluxe",
+		"price": 900.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 1,
+		"room": "Deluxe",
+		"price": 1000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 6,
+		"room": "Superior",
+		"price": 2000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 8,
+		"room": "Superior",
+		"price": 2400.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 18,
+		"room": "Sweet Suite",
+		"price": 5300.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 14,
+		"room": "Sweet Suite",
+		"price": 25000.0
+	}]
+}
+```
 To get a list of all the hotels in Bangkok city sorted in the ascending order of prices:
 http://localhost:8080/city/bangkok?orderBy=desc
-
+```sh
+{
+	"statusCode": 200,
+	"message": "Success",
+	"results": [{
+		"city": "Bangkok",
+		"hotelID": 14,
+		"room": "Sweet Suite",
+		"price": 25000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 18,
+		"room": "Sweet Suite",
+		"price": 5300.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 8,
+		"room": "Superior",
+		"price": 2400.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 6,
+		"room": "Superior",
+		"price": 2000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 1,
+		"room": "Deluxe",
+		"price": 1000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 15,
+		"room": "Deluxe",
+		"price": 900.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 11,
+		"room": "Deluxe",
+		"price": 60.0
+	}]
+}
+```
 To get a list of all the hotels with a deluxe room:
 http://localhost:8080/room/deluxe
-
+```sh
+{
+	"statusCode": 200,
+	"message": "Success",
+	"results": [{
+		"city": "Bangkok",
+		"hotelID": 1,
+		"room": "Deluxe",
+		"price": 1000.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 4,
+		"room": "Deluxe",
+		"price": 2200.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 7,
+		"room": "Deluxe",
+		"price": 1600.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 11,
+		"room": "Deluxe",
+		"price": 60.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 12,
+		"room": "Deluxe",
+		"price": 1800.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 15,
+		"room": "Deluxe",
+		"price": 900.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 17,
+		"room": "Deluxe",
+		"price": 2800.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 21,
+		"room": "Deluxe",
+		"price": 7000.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 23,
+		"room": "Deluxe",
+		"price": 5000.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 25,
+		"room": "Deluxe",
+		"price": 1900.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 26,
+		"room": "Deluxe",
+		"price": 2300.0
+	}]
+}
+```
 To get a list of all the hotels with a deluxe room in the ascending order of prices:
 http://localhost:8080/room/deluxe?orderBy=asc
-
+```sh
+{
+	"statusCode": 200,
+	"message": "Success",
+	"results": [{
+		"city": "Bangkok",
+		"hotelID": 11,
+		"room": "Deluxe",
+		"price": 60.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 15,
+		"room": "Deluxe",
+		"price": 900.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 1,
+		"room": "Deluxe",
+		"price": 1000.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 7,
+		"room": "Deluxe",
+		"price": 1600.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 12,
+		"room": "Deluxe",
+		"price": 1800.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 25,
+		"room": "Deluxe",
+		"price": 1900.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 4,
+		"room": "Deluxe",
+		"price": 2200.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 26,
+		"room": "Deluxe",
+		"price": 2300.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 17,
+		"room": "Deluxe",
+		"price": 2800.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 23,
+		"room": "Deluxe",
+		"price": 5000.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 21,
+		"room": "Deluxe",
+		"price": 7000.0
+	}]
+}
+```
 To get a list of all the hotels with a deluxe room sorted in the ascending order of prices:
 http://localhost:8080/room/deluxe?orderBy=desc
+```sh
+{
+	"statusCode": 200,
+	"message": "Success",
+	"results": [{
+		"city": "Ashburn",
+		"hotelID": 21,
+		"room": "Deluxe",
+		"price": 7000.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 23,
+		"room": "Deluxe",
+		"price": 5000.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 17,
+		"room": "Deluxe",
+		"price": 2800.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 26,
+		"room": "Deluxe",
+		"price": 2300.0
+	}, {
+		"city": "Amsterdam",
+		"hotelID": 4,
+		"room": "Deluxe",
+		"price": 2200.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 25,
+		"room": "Deluxe",
+		"price": 1900.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 12,
+		"room": "Deluxe",
+		"price": 1800.0
+	}, {
+		"city": "Ashburn",
+		"hotelID": 7,
+		"room": "Deluxe",
+		"price": 1600.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 1,
+		"room": "Deluxe",
+		"price": 1000.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 15,
+		"room": "Deluxe",
+		"price": 900.0
+	}, {
+		"city": "Bangkok",
+		"hotelID": 11,
+		"room": "Deluxe",
+		"price": 60.0
+	}]
+}
+```
+When the program hits the rate limit for City API, the sample response for hitting this API is given below.
+
+http://localhost:8080/city/bangkok
+```sh
+{
+	"statusCode": 429,
+	"message": "Too many requests. Api is suspended for the next 5 seconds",
+	"results": null
+}
+````
