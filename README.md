@@ -357,3 +357,13 @@ http://localhost:8080/room/deluxe?orderBy=desc
 	}]
 }
 ```
+When the program hits the rate limit for City API, the sample response for hitting this API is given below.
+
+http://localhost:8080/city/bangkok
+```sh
+{
+	"statusCode": 429,
+	"message": "Too many requests. Api is suspended for the next 5 seconds",
+	"results": null
+}
+````
