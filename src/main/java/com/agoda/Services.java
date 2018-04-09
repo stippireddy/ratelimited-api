@@ -1,9 +1,12 @@
 package com.agoda;
 
+import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -19,8 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Services {
 
-	private CityRateLimiter cityLimiter;
-	private RoomRateLimiter roomLimiter;
+	private final CityRateLimiter cityLimiter;
+	private final RoomRateLimiter roomLimiter;
+	private final Logger logger = LoggerFactory.getLogger(Services.class);
 
 	@Autowired
 	public Services(@Qualifier("cityRateLimiter") IRateLimiter cityLimiter,
@@ -33,9 +37,8 @@ public class Services {
 	@RequestMapping(value = "/city/{city}", method = RequestMethod.GET)
 	public ResponseJson getHotelsByCity(@PathVariable String city,
 			@RequestParam(required = false, value = "orderBy") String orderBy) {
-		if (city == null || city.length() == 0) {
-
-		}
+		logger.info("Request received at the /city endpoint at " + LocalDateTime.now());
+		logger.debug("Request params : [City: " + city + " , orderBy: " + orderBy + "]");
 		synchronized (CityRateLimiter.class) {
 			long currentTime = System.currentTimeMillis();
 			if (cityLimiter.getSuspensionEndTime() > -1 && cityLimiter.getSuspensionEndTime() >= currentTime) {
@@ -71,12 +74,11 @@ public class Services {
 	@RequestMapping(value = "/room/{room}", method = RequestMethod.GET)
 	public ResponseJson getHotelsByRoom(@PathVariable String room,
 			@RequestParam(required = false, value = "orderBy") String orderBy) {
-		synchronized (CityRateLimiter.class) {
+		synchronized (RoomRateLimiter.class) {
 			long currentTime = System.currentTimeMillis();
 			if (roomLimiter.getSuspensionEndTime() > -1 && roomLimiter.getSuspensionEndTime() >= currentTime) {
 				return suspensionMessage(roomLimiter);
 			}
-
 			long windowStartTime = currentTime - roomLimiter.getTimeInterval();
 			ArrayDeque<Long> requestQueue = roomLimiter.getRequestQueue();
 			while (!requestQueue.isEmpty() && windowStartTime >= requestQueue.peekFirst()) {
@@ -104,7 +106,7 @@ public class Services {
 
 	private ResponseJson exceedMessageLimitPerInterval(IRateLimiter limiter) {
 		ResponseJson json = new ResponseJson();
-		json.setStatusCode(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED.value());
+		json.setStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
 		json.setMessage("Api key is blocked due to max requests in interval of "
 				+ (limiter.getSuspensionInterval() / 1000) + " seconds");
 		return json;
@@ -113,7 +115,8 @@ public class Services {
 	private ResponseJson suspensionMessage(IRateLimiter limiter) {
 		ResponseJson json = new ResponseJson();
 		json.setStatusCode(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED.value());
-		json.setMessage("Api key is suspended for next " + (limiter.getSuspensionEndTime()) + " seconds");
+		json.setMessage("Api key is suspended for next "
+				+ (limiter.getSuspensionEndTime() - System.currentTimeMillis()) / 1000 + " seconds");
 		return json;
 	}
 

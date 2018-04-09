@@ -42,6 +42,8 @@ public class AgodaBackendDeveloperApplicationTests {
 			restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
 		}
 		ResponseEntity<ResponseJson> response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
+		assertEquals(429, response.getBody().getStatusCode());
+		response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
 		assertEquals(509, response.getBody().getStatusCode());
 		Thread.sleep(10000);
 		response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
@@ -53,8 +55,7 @@ public class AgodaBackendDeveloperApplicationTests {
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		ResponseEntity<ResponseJson> response = restTemplate.exchange(createURLWithPort("/room/deluxe"), HttpMethod.GET,
 				entity, ResponseJson.class);
-		ResponseJson responseString = response.getBody();
-		assertEquals(200, responseString.getStatusCode());
+		assertEquals(200, response.getBody().getStatusCode());
 	}
 
 	private String createURLWithPort(String uri) {
