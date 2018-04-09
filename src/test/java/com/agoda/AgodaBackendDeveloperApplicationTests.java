@@ -43,8 +43,6 @@ public class AgodaBackendDeveloperApplicationTests {
 		}
 		ResponseEntity<ResponseJson> response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
 		assertEquals(429, response.getBody().getStatusCode());
-		response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
-		assertEquals(509, response.getBody().getStatusCode());
 		Thread.sleep(10000);
 		response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
 		assertEquals(200, response.getBody().getStatusCode());
@@ -55,6 +53,20 @@ public class AgodaBackendDeveloperApplicationTests {
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		ResponseEntity<ResponseJson> response = restTemplate.exchange(createURLWithPort("/room/deluxe"), HttpMethod.GET,
 				entity, ResponseJson.class);
+		assertEquals(200, response.getBody().getStatusCode());
+	}
+
+	@Test
+	public void testRetrieveHotelsWithDeluxeRoomsUsesUpTheLimit() throws JSONException, InterruptedException {
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		String url = createURLWithPort("/room/deluxe");
+		for (int i = 0; i < 100; i++) {
+			restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
+		}
+		ResponseEntity<ResponseJson> response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
+		assertEquals(429, response.getBody().getStatusCode());
+		Thread.sleep(10000);
+		response = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseJson.class);
 		assertEquals(200, response.getBody().getStatusCode());
 	}
 

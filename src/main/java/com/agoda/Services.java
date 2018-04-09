@@ -52,7 +52,7 @@ public class Services {
 			}
 			if (requestQueue.size() >= cityLimiter.getMaxRequests()) {
 				cityLimiter.setSuspensionEndTime(currentTime + cityLimiter.getSuspensionInterval());
-				return exceedMessageLimitPerInterval(cityLimiter);
+				return suspensionMessage(cityLimiter);
 			}
 			cityLimiter.setSuspensionEndTime(-1);
 			requestQueue.add(currentTime);
@@ -86,7 +86,7 @@ public class Services {
 			}
 			if (requestQueue.size() >= roomLimiter.getMaxRequests()) {
 				roomLimiter.setSuspensionEndTime(currentTime + roomLimiter.getSuspensionInterval());
-				return exceedMessageLimitPerInterval(roomLimiter);
+				return suspensionMessage(roomLimiter);
 			}
 			roomLimiter.setSuspensionEndTime(-1);
 			requestQueue.add(currentTime);
@@ -104,18 +104,10 @@ public class Services {
 		return json;
 	}
 
-	private ResponseJson exceedMessageLimitPerInterval(IRateLimiter limiter) {
-		ResponseJson json = new ResponseJson();
-		json.setStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
-		json.setMessage("Api key is blocked due to max requests in interval of "
-				+ (limiter.getSuspensionInterval() / 1000) + " seconds");
-		return json;
-	}
-
 	private ResponseJson suspensionMessage(IRateLimiter limiter) {
 		ResponseJson json = new ResponseJson();
-		json.setStatusCode(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED.value());
-		json.setMessage("Api key is suspended for next "
+		json.setStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
+		json.setMessage("Sorry, the system can not service your request at this time. Api is suspended for the next "
 				+ (limiter.getSuspensionEndTime() - System.currentTimeMillis()) / 1000 + " seconds");
 		return json;
 	}
