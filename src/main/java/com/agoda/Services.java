@@ -128,7 +128,7 @@ public class Services {
 	private ResponseJson suspensionMessage(IRateLimiter limiter) {
 		ResponseJson json = new ResponseJson();
 		json.setStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
-		json.setMessage("Sorry, the system can not service your request at this time. Api is suspended for the next "
+		json.setMessage("Too many requests. Api is suspended for the next "
 				+ (limiter.getSuspensionEndTime() - System.currentTimeMillis()) / 1000 + " seconds");
 		return json;
 	}
